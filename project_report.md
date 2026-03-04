@@ -208,7 +208,7 @@
 
 **vi**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **CHAPTER 1**
 
@@ -226,7 +226,7 @@
 
 **1**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **1.1 Problem Statement**
 
@@ -246,7 +246,7 @@
 
 **2**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **Building upon this foundation, an LSTM-based generative model will be trained on approximately 9,480 HIV-related drug molecules to learn the chemical grammar of valid SMILES representations, enabling the generation of novel, chemically valid molecular structures. A central focus of the project is the development of a robust multi-stage evaluation pipeline capable of assessing generated candidates across five key dimensions: drug-likeness (Lipinski's Rule of Five), electronic stability (HOMO-LUMO gap via quantum chemistry), binding affinity to HIV-1 Protease (molecular docking), pharmacokinetic viability (ADMET properties), and synthetic feasibility (SA Score).**
 
@@ -262,7 +262,7 @@
 
 **3**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **Artificial intelligence offers a transformative approach to this challenge. Deep generative models, particularly recurrent neural networks such as LSTMs, have demonstrated remarkable ability to learn the syntax and semantics of molecular representations (SMILES notation) from large chemical datasets. Once trained, these models can generate entirely novel molecular structures that are chemically valid and possess desired drug-like properties. This generative approach explores chemical space far more efficiently than traditional screening methods, potentially uncovering structurally diverse candidates that would not be found through conventional approaches.**
 
@@ -278,7 +278,7 @@
 
 **4**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **1.4 Organization of Report**
 
@@ -296,7 +296,7 @@
 
 **5**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **CHAPTER 2**
 
@@ -316,7 +316,7 @@
 
 **7**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **For generative modeling, three architectures were compared: VAEs that learn a continuous latent space representation enabling interpolation between molecules, GANs that use adversarial training to generate realistic molecular structures, and RNNs (specifically LSTMs) that learn the sequential grammar of SMILES strings character by character. The RNN-based approach treats molecule generation as a language modeling task, where the model learns to predict the next character in a SMILES string given the preceding characters. This autoregressive approach naturally enforces chemical validity since the model learns which character sequences correspond to valid molecular structures.**
 
@@ -334,7 +334,7 @@
 
 **8**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **2.2 Generative Models for Molecular Design Using SMILES**
 
@@ -350,7 +350,7 @@
 
 **9**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **A vocabulary of unique characters was extracted from the processed SMILES strings, including atoms, bonds, ring closures, and branch symbols. Special start and end tokens were added to enable the model to learn sequence boundaries. The character-level tokenization approach was chosen over subword tokenization because chemical SMILES syntax requires precise character-level control to maintain structural validity.**
 
@@ -370,7 +370,7 @@
 
 **10**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **2.3 LSTM-Based Molecular Generation for Drug Discovery**
 
@@ -388,7 +388,7 @@
 
 **12**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **During generation, new molecules are sampled character by character from the learned probability distribution. Temperature scaling was employed to control the trade-off between novelty and validity: lower temperatures (T<1.0) produce more conservative, valid molecules, while higher temperatures (T>1.0) increase diversity but risk generating invalid structures. The optimal temperature of 0.8 was identified through systematic experimentation.**
 
@@ -408,7 +408,7 @@
 
 **15**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **Methodology**
 
@@ -430,7 +430,7 @@
 
 **16**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **2.5 Molecular Docking Using AutoDock Vina for Virtual Screening**
 
@@ -448,7 +448,7 @@
 
 **17**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **Results**
 
@@ -470,7 +470,7 @@
 
 **21**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **Results**
 
@@ -492,7 +492,7 @@
 
 **22**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **Figure 2.5: AutoDock Vina molecular docking workflow**
 
@@ -514,7 +514,7 @@
 
 **24**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **Methodology**
 
@@ -536,7 +536,7 @@
 
 **25**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **Methodology**
 
@@ -556,7 +556,7 @@
 
 **27**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **2.10 Computational Retrosynthetic Analysis for Drug Development**
 
@@ -576,7 +576,7 @@
 
 **28**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **Summary of Findings**
 
@@ -596,7 +596,7 @@
 
 **31**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **Results**
 
@@ -620,7 +620,7 @@
 
 **32**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **The evaluation module assesses each generated candidate across multiple dimensions including structural validity, drug-likeness (Lipinski's rules), predicted binding affinity, and synthetic feasibility. Results from individual evaluations are combined through a weighted scoring framework to produce a final candidate ranking.**
 
@@ -644,7 +644,7 @@
 
 **35**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **The paper discusses several weighting strategies: equal weights (treating all criteria as equally important), expert-defined weights (reflecting domain knowledge about relative importance), and data-driven weights (learned from successful drug development datasets). The authors recommend assigning higher weights to binding affinity and drug-likeness, as these are the most direct predictors of clinical success.**
 
@@ -660,7 +660,7 @@
 
 **38**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **2.14 Lipinski's Rule of Five and Drug-Likeness Filtering**
 
@@ -678,7 +678,7 @@
 
 **39**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **Results**
 
@@ -700,7 +700,7 @@
 
 **42**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **Results**
 
@@ -714,7 +714,7 @@
 
 **43**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **CHAPTER 3**
 
@@ -736,7 +736,7 @@
 
 **44**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **3.2 Overall System Framework**
 
@@ -756,7 +756,7 @@
 
 **45**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **3.3 Data Collection and Preprocessing Strategy**
 
@@ -776,7 +776,7 @@
 
 **46**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **3.4 LSTM-Based Molecular Generation Methodology**
 
@@ -794,7 +794,7 @@
 
 **48**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **3.5 Molecular Docking Methodology**
 
@@ -818,7 +818,7 @@
 
 **50**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **3.7 Synthesizability Assessment Methodology**
 
@@ -842,7 +842,7 @@
 
 **52**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **CHAPTER 4**
 
@@ -878,7 +878,7 @@
 
 **53**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **4.2 LSTM Model Training and Molecule Generation**
 
@@ -900,7 +900,7 @@
 
 **55**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **4.5 Streamlit Web Dashboard Implementation**
 
@@ -916,7 +916,7 @@
 
 **56**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **4.5.2 Multi-Stage Evaluation Pipeline**
 
@@ -936,7 +936,7 @@
 
 **57**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **4.6 Final Ranking and Composite Score Implementation**
 
@@ -950,7 +950,7 @@
 
 **58**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
 
 **CHAPTER 5**
 
@@ -974,4 +974,4 @@
 
 **59**
 
-**DENOVO  – AI-DRIVEN DRUG DISCOVERY FOR HIV-1 PROTEASE INHIBITORS**
+DE NOVO-HIV : Neural-Quantum Protease Inhibition
