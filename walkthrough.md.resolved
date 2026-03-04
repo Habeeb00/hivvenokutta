@@ -1,0 +1,189 @@
+# 🧬 HIV-1 Drug Discovery Project — Full Walkthrough
+
+## Overview
+
+This is an **AI-powered drug discovery** project targeting **HIV-1 Protease**, a critical enzyme the HIV virus needs to replicate. The goal is to use deep learning to **generate novel drug-like molecules** and then evaluate them.
+
+The project has **two main parts**:
+
+| Folder | Purpose |
+|--------|---------|
+| `finalDo_DrugDiscoveryHIV-main/` | Core Jupyter notebook with the AI pipeline (data → model → molecules → evaluation) |
+| `hiv_protease-main/` | Streamlit web dashboard to visually present the results |
+
+---
+
+## Part 1: The AI Pipeline — [finalDo.ipynb](file:///c:/Users/habee/OneDrive/Desktop/final%20yr%20project/finalDo_DrugDiscoveryHIV-main/finalDo.ipynb)
+
+This is a **Google Colab notebook** that implements the entire drug discovery pipeline in sequential steps. Here's what each stage does:
+
+### Stage 1 — Data Loading
+- Mounts Google Drive and loads a CSV file (`final dataset hopeful.csv`, ~9,480 molecules).
+- The dataset contains known drug molecules with their **SMILES** strings (a text representation of chemical structures), drug type, chirality, and Lipinski rule compliance.
+
+### Stage 2 — Data Cleaning
+- Uses **RDKit** (a chemistry library) to validate, canonicalize, and filter SMILES strings.
+- Removes invalid, duplicate, and overly complex molecules (length > 100 chars).
+- Results in **~9,286 clean, high-quality molecules**.
+
+### Stage 3 — Vocabulary & Encoding
+- Extracts all unique characters from the SMILES strings (35 characters total).
+- Adds special tokens: `!` (start) and `E` (end).
+- Creates a `char_to_int` mapping dictionary (saved as [char_to_int.json](file:///c:/Users/habee/OneDrive/Desktop/final%20yr%20project/finalDo_DrugDiscoveryHIV-main/char_to_int.json)).
+
+### Stage 4 — Sequence Vectorization
+- Converts every SMILES string into "next-character prediction" training pairs.
+- Input (X): partial SMILES sequence → Output (Y): the next character.
+- Pads all sequences to `max_len = 101`.
+- Results in **~436,084 training pairs**.
+
+### Stage 5 — LSTM Model Architecture
+A **sequential neural network** built with TensorFlow/Keras:
+
+```
+Embedding (35 chars → 128-dim) 
+→ LSTM(256, return_sequences=True) → Dropout(0.2)
+→ LSTM(256) → Dropout(0.2)
+→ Dense(35, softmax)
+```
+
+- **Embedding**: Learns a vector representation for each atom/character.
+- **LSTM layers**: Learn the "grammar" of valid SMILES strings.
+- **Dense output**: Predicts the probability of each next character.
+
+### Stage 6 — Training
+- Trained for 50 epochs with batch size 256 on a GPU.
+- Uses `categorical_crossentropy` loss, `adam` optimizer.
+- Model checkpointing saves the best model to Google Drive.
+- Saved model files: [hiv_protease_model.keras](file:///c:/Users/habee/OneDrive/Desktop/final%20yr%20project/finalDo_DrugDiscoveryHIV-main/hiv_protease_model.keras) and [hiv_protease_model_v1.keras](file:///c:/Users/habee/OneDrive/Desktop/final%20yr%20project/finalDo_DrugDiscoveryHIV-main/hiv_protease_model_v1.keras).
+
+### Stage 7 — Molecule Generation
+- Uses the trained model to generate **10 new SMILES strings** by sampling character-by-character.
+- Uses **temperature sampling** (temp=0.8) to balance creativity vs. validity.
+- **Result**: 10/10 generated molecules were chemically valid!
+
+### Stage 8 — Lipinski Rule-of-Five Filtering
+- Checks each generated molecule against **Lipinski's Rule of Five** (drug-likeness):
+  - Molecular Weight < 500
+  - LogP < 5 (lipophilicity)
+  - H-bond donors < 5
+  - H-bond acceptors < 10
+- **Result**: 7 out of 10 passed → these become **lead candidates**.
+
+### Stage 9 — Save Candidates
+- The 7 drug-like candidates are saved as an SDF file: [top_candidates.sdf](file:///c:/Users/habee/OneDrive/Desktop/final%20yr%20project/finalDo_DrugDiscoveryHIV-main/top_candidates.sdf).
+
+### Stage 10 — Quantum Chemistry Analysis (HOMO-LUMO Gap)
+- Uses **PySCF** (a quantum chemistry library) to calculate electronic stability.
+- For each candidate, computes HOMO/LUMO energies and the **energy gap**.
+- A smaller gap → more "reactive" → potentially better at binding to the target.
+- Results saved as [quantum_results.csv](file:///c:/Users/habee/OneDrive/Desktop/final%20yr%20project/finalDo_DrugDiscoveryHIV-main/quantum_results.csv).
+- **Candidate #5 ranked first** with the smallest HOMO-LUMO gap (10.49 eV).
+
+---
+
+## Part 2: Streamlit Web App — `hiv_protease-main/`
+
+A **Streamlit web dashboard** to present results visually.
+
+### Running the App
+```bash
+cd hiv_protease-main
+pip install -r requirements.txt  # if requirements exist, otherwise install manually
+streamlit run app.py
+```
+> **Note**: The app has a `venv/` folder with ~22,000 files, meaning a Python virtual environment is already set up. You would activate it first, or install dependencies manually (`streamlit`, `rdkit`, `py3Dmol`, `stmol`).
+
+### App Pages
+
+| File | Page | What it does |
+|------|------|-------------|
+| [app.py](file:///c:/Users/habee/OneDrive/Desktop/final%20yr%20project/hiv_protease-main/app.py) | **Login** | Hardcoded login (ID: `ADMIN`, Password: `PROTEASE2026`). Gates access to all other pages. |
+| [1_home.py](file:///c:/Users/habee/OneDrive/Desktop/final%20yr%20project/hiv_protease-main/pages/1_home.py) | **Biological Context** | Explains what HIV-1 Protease is, why it's a drug target, and shows a 3D structure image. |
+| [2_Discovery.py](file:///c:/Users/habee/OneDrive/Desktop/final%20yr%20project/hiv_protease-main/pages/2_Discovery.py) | **Discovery Engine** | Displays **8 hardcoded lead candidates** with 2D images, AI scores, stability (HOMO-LUMO gap), Lipinski properties, and interactive 3D molecular visualization (py3Dmol). |
+
+> [!IMPORTANT]
+> The Discovery Engine page has **8 candidate molecules hardcoded** directly in the Python code (not loaded dynamically from the notebook outputs). These are different molecules than the ones generated in the notebook. The "AI Score" and "Stability" values are also hardcoded.
+
+---
+
+## What Has Been Completed (Phase 1) ✅
+
+| Step | Status |
+|------|--------|
+| Dataset collection (9,480 HIV-related molecules) | ✅ Done |
+| Data cleaning & validation | ✅ Done |
+| Character vocabulary & encoding | ✅ Done |
+| LSTM model training | ✅ Done |
+| Novel molecule generation | ✅ Done |
+| Lipinski Rule-of-Five filtering | ✅ Done |
+| Quantum Chemistry (HOMO-LUMO Gap) analysis | ✅ Done |
+| Streamlit web dashboard (login, bio context, discovery) | ✅ Done |
+
+---
+
+## What Needs to Be Done Next (Phase 2) 🔮
+
+You want to implement **three critical drug evaluation steps** for the final candidate molecules:
+
+### 1. 🧲 Molecular Docking
+**What**: Simulates how well a candidate molecule **physically binds** to the HIV-1 Protease active site.
+
+**Why**: Just because a molecule is "drug-like" doesn't mean it actually binds to the target protein. Docking gives you a **binding affinity score** (lower = better).
+
+**How to implement** (typical approach):
+- Use **AutoDock Vina** or **Open Babel** (free, scriptable from Python).
+- Download the **HIV-1 Protease crystal structure** from PDB (e.g., PDB ID: `1HSG`).
+- Prepare the protein: remove water, add hydrogens, convert to PDBQT format.
+- Prepare each candidate ligand: generate 3D coords (RDKit), convert to PDBQT.
+- Run docking simulations, collect binding energy scores.
+- Rank candidates by binding affinity.
+
+**Tools**: AutoDock Vina, `meeko` (for PDBQT conversion), `vina` Python bindings, Open Babel.
+
+---
+
+### 2. 💊 ADMET Analysis
+**What**: Predicts the **pharmacokinetic and toxicity profile** of each molecule:
+- **A**bsorption — Can it be absorbed by the body?
+- **D**istribution — Does it reach the right tissues?
+- **M**etabolism — How is it broken down?
+- **E**xcretion — How is it eliminated?
+- **T**oxicity — Is it toxic?
+
+**Why**: A molecule might bind well to the target but be toxic or not absorbable — it still fails as a drug.
+
+**How to implement**:
+- Use **ADMETlab 2.0/3.0** (free web tool: https://admetmesh.scbdd.com/) — upload SMILES and get comprehensive ADMET predictions.
+- Or use **pkCSM** (http://biosig.unimelb.edu.au/pkcsm/) — another free web tool.
+- Or use **DeepPurpose** or **TDC (Therapeutics Data Commons)** Python libraries for programmatic ADMET prediction.
+- Key properties to predict: Caco-2 permeability, HIA, BBB penetration, CYP inhibition, hERG toxicity, LD50, AMES toxicity.
+
+**Tools**: ADMETlab (web), pkCSM (web), `deepchem`, `tdc` Python package, `rdkit` descriptors.
+
+---
+
+### 3. 🏭 Synthesizability Analysis
+**What**: Evaluates how **easy or difficult** it would be to actually synthesize (manufacture) each candidate molecule in a lab.
+
+**Why**: A molecule that's impossible or extremely expensive to synthesize has no practical value.
+
+**How to implement**:
+- **SA Score (Synthetic Accessibility Score)**: A score from 1 (easy) to 10 (hard), already available in RDKit via the `sascorer` module.
+- **SCScore** (from Coley et al.): ML-based retrosynthetic complexity.
+- **ASKCOS** (from MIT): A more advanced retrosynthetic planning tool (web-based or API).
+
+**Tools**: RDKit `SA_Score`, `scscorer` Python library, ASKCOS (web: https://askcos.mit.edu/).
+
+---
+
+## Summary: What You Need to Do
+
+> [!TIP]
+> I recommend implementing these in a **new Colab notebook** (Phase 2) that loads the candidate molecules from the existing [top_candidates.sdf](file:///c:/Users/habee/OneDrive/Desktop/final%20yr%20project/finalDo_DrugDiscoveryHIV-main/top_candidates.sdf) file or the hardcoded SMILES in the Streamlit app. Then integrate the results into the Streamlit dashboard as new pages (e.g., `3_Docking.py`, `4_ADMET.py`, `5_Synthesizability.py`).
+
+1. **Molecular Docking** → Dock all 8 candidates against HIV-1 Protease (PDB: 1HSG) using AutoDock Vina, get binding affinity scores.
+2. **ADMET Analysis** → Run all 8 candidate SMILES through ADMETlab or a Python ADMET predictor, collect results.
+3. **Synthesizability** → Calculate SA scores for each candidate using RDKit.
+4. **Integrate into Streamlit** → Add new pages to the web app to display docking results, ADMET profiles, and SA scores.
+5. **Final ranking** → Create a comprehensive scoring system that combines all metrics (AI score, HOMO-LUMO gap, docking affinity, ADMET, SA score) to rank the final drug candidates.
